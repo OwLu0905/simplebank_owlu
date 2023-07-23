@@ -16,4 +16,7 @@ migratedown:
 sqlc:
 	sqlc generate
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc
+start-postgres:
+	docker exec -it postgres15 /bin/sh
+
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc start-postgres
