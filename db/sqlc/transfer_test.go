@@ -62,6 +62,7 @@ func TestListTransfer(t *testing.T) {
 		createRandomTransfer(t, account2, account1)
 	}
 
+	// NOTE : toAccountId should be account1.ID due to the settings of Limit and Offset
 	arg := ListTransfersParams{
 		FromAccountID: account1.ID,
 		ToAccountID:   account1.ID,
