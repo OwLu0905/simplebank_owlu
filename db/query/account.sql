@@ -6,14 +6,27 @@ INSERT INTO accounts (
 ) RETURNING *;
 
 -- name: GetAccount :one
-SELECT * FROM accounts
-WHERE id = $1 LIMIT 1;
+select *
+from accounts
+where id = $1
+limit 1
+;
+
+-- name: GetAccountForUpdate :one
+select *
+from accounts
+where id = $1
+limit 1
+for update
+;
 
 -- name: ListAccounts :many
-SELECT * FROM accounts
-ORDER BY id
-LIMIT $1
-OFFSET $2;
+select *
+from accounts
+order by id
+limit $1
+offset $2
+;
 
 -- name: UpdateAccount :one
 UPDATE accounts 
@@ -22,5 +35,6 @@ WHERE id = $1
 RETURNING *;
 
 -- name: DeleteAccount :exec
-DELETE FROM accounts
-WHERE id = $1;
+delete from accounts
+where id = $1
+;
