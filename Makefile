@@ -19,7 +19,10 @@ sqlc:
 test :
 	go test -v -cover ./...
 
+retest :
+	go clean -testcache && go test -v -cover ./...
+
 start-postgres:
 	docker exec -it postgres15 /bin/sh
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test start-postgres
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test retest start-postgres
