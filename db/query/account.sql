@@ -17,7 +17,7 @@ select *
 from accounts
 where id = $1
 limit 1
-for update
+for no key update
 ;
 
 -- name: ListAccounts :many
