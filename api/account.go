@@ -42,7 +42,6 @@ type getAccountRequest struct {
 }
 
 func (server *Server) getAccount(ctx *gin.Context) {
-
 	var req getAccountRequest
 
 	if err := ctx.ShouldBindUri(&req); err != nil {
@@ -72,7 +71,6 @@ type listAccountRequest struct {
 }
 
 func (server *Server) listAccount(ctx *gin.Context) {
-
 	var req listAccountRequest
 
 	if err := ctx.ShouldBindQuery(&req); err != nil {
@@ -100,3 +98,31 @@ func (server *Server) listAccount(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, accounts)
 
 }
+
+/**
+// NOTE: This causes an issue when deleted account id is a foreign key that refers to the accounts table
+
+// NOTE: see discuss link: https://www.udemy.com/course/backend-master-class-golang-postgresql-kubernetes/learn/lecture/25822316#questions/19258602
+
+type deleteAccountRequest struct {
+	AccountId int64 `json:"accountId" binding:"required"`
+}
+
+func (server *Server) deleteAccount(ctx *gin.Context) {
+	var req deleteAccountRequest
+
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		return
+	}
+
+	err := server.store.DeleteAccount(ctx, int64(req.AccountId))
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
+	// TODO: Return when Success
+	ctx.JSON(http.StatusOK, true)
+} */
