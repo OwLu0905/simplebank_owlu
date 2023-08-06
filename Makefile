@@ -25,4 +25,7 @@ retest :
 start-postgres:
 	docker exec -it postgres15 /bin/sh
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test retest start-postgres
+server: 
+	go run main.go
+
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test retest start-postgres server
