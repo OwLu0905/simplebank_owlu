@@ -27,5 +27,6 @@ start-postgres:
 
 server: 
 	go run main.go
-
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test retest start-postgres server
+mock:
+	mockgen -package mockdb -destination db/mock/store.go github.com/OwLu0905/simplebank_owlu/db/sqlc Store
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test retest start-postgres server mock
