@@ -34,8 +34,7 @@ func (server *Server) createUser(ctx *gin.Context) {
 	}
 
 	hashedPassword, err := util.HashPassword(req.Password)
-	// require.NoError(t, err)
-	// require.NotEmpty(t, hashedPassword)
+
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 	}
