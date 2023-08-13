@@ -24,6 +24,7 @@ type eqCreateUserParamsMatcher struct {
 }
 
 func (e eqCreateUserParamsMatcher) Matches(x interface{}) bool {
+	// NOTE: confued to this line
 	arg, ok := x.(sqlc.CreateUserParams)
 
 	if !ok {
@@ -66,6 +67,11 @@ func TestCreateUserAPI(t *testing.T) {
 				"email":     user.Email,
 			},
 			buildStubs: func(store *mockdb.MockStore) {
+				// NOTE : don't need to put HashedPassword because the salting hashed password will definetely not be the same.
+				// NOTE : we utilize original password and the hashedpassword in the Macher function,
+				// NOTE : Check whether original password would be the same as hashedpassword by using CheckPassword func
+				// NOTE: if true, then we modify (add) the HashedPassword param in the request body and continue creating user operation.
+
 				arg := sqlc.CreateUserParams{
 					Username: user.Username,
 					FullName: user.FullName,
