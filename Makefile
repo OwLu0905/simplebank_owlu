@@ -36,4 +36,8 @@ server:
 
 mock:
 	mockgen -package mockdb -destination db/mock/store.go github.com/OwLu0905/simplebank_owlu/db/sqlc Store
-.PHONY: postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 sqlc test retest start-postgres server mock
+
+production:
+	docker run --name simplebank -p 8080:8080 -e DB_SOURCE="postgresql://root:owlu0905@172.17.0.2:5432/simple_bank?sslmode=disable" -e GIN_MODE=release simplebank:latest 
+.PHONY: postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 sqlc test retest start-postgres server mock production
+
