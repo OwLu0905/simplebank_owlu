@@ -1,5 +1,5 @@
 postgres:
-	docker run --name postgres15 -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=owlu0905 -d postgres:15-alpine
+	docker run --name postgres15 --network bank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=owlu0905 -d postgres:15-alpine
 
 createdb:
 	docker exec -it postgres15 createdb --username=root --owner=root simple_bank
@@ -38,6 +38,6 @@ mock:
 	mockgen -package mockdb -destination db/mock/store.go github.com/OwLu0905/simplebank_owlu/db/sqlc Store
 
 production:
-	docker run --name simplebank -p 8080:8080 -e DB_SOURCE="postgresql://root:owlu0905@172.17.0.2:5432/simple_bank?sslmode=disable" -e GIN_MODE=release simplebank:latest 
+	docker run --name simplebank --network bank-network -p 8080:8080 -e DB_SOURCE="postgresql://root:owlu0905@postgres15:5432/simple_bank?sslmode=disable" -e GIN_MODE=release simplebank:latest 
 .PHONY: postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 sqlc test retest start-postgres server mock production
 
